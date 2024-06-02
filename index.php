@@ -9,6 +9,22 @@ $sql = "SELECT * FROM mytable";
 $result = $conn->query($sql);
 
 ?>
+<?php
+// Check if a delete request has been made
+if (isset($_GET['delete_id'])) {
+    $delete_id = $_GET['delete_id'];
+    $stmt = $conn->prepare("DELETE FROM mytable WHERE id = ?");
+    $stmt->bind_param("i", $delete_id);
+    
+    if ($stmt->execute()) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error deleting record: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+?>
 
     <!-- Header section  -->
 <?php include("header.php") ?>
@@ -37,6 +53,7 @@ $result = $conn->query($sql);
                             echo "<td>".$row["title"]."</td>";
                             echo "<td>".$row["description"]."</td>";
                             echo "<td><a href='edit.php?id=".$row["id"]."' class='btn btn-primary'>Edit</a></td>";
+                            echo "<td><a href='index.php?id=".$row["id"]."' class='btn btn-primary'>Delete</a></td>";
                             echo "</tr>";
                             $i++;
                         }

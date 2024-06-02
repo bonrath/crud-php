@@ -24,7 +24,7 @@ if(isset($_POST['title']) && $_POST['description']) {
           if(isset($result)){
             if ($result) {
               echo "New record created successfully";
-              header("Location: index.php");
+              header("Location: /var/www/html/index.php");
             } else {
               echo "Error: ". $sql. "<br>". $conn->error;
             }
